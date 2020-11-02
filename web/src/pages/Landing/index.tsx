@@ -12,7 +12,7 @@ import * as S from "./styles";
 function Landing() {
   return (
     <S.PageLanding>
-      <div id="page-landing-content" className="container">
+      <S.Container id="page-landing-content" className="container">
         <S.LogoContainer>
           <S.LogoContainerImg src={logoImg} alt="Proffy" />
           <S.LogoContainerH2>
@@ -34,14 +34,14 @@ function Landing() {
 
           <S.ButtonsContainerA>
             <S.ButtonsContainerImg src={giveClassesIcon} alt="Estudar" />
-            Estudar
+            Dar aulas
           </S.ButtonsContainerA>
         </S.ButtonsContainer>
-        <span className="total-connections">
+        <S.TotalConnections>
           Total de 200 conexões já realizadas
-          <img src={purpleHeartIcon} alt="Coração roxinho" />
-        </span>
-      </div>
+          <S.TotalConnectionsImg src={purpleHeartIcon} alt="Coração roxinho" />
+        </S.TotalConnections>
+      </S.Container>
     </S.PageLanding>
   );
 }
