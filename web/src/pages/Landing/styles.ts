@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import media from "styled-media-query";
+import { Link } from "react-router-dom";
 
 interface PageProps {
-    bgColor?: string;
+    bgcolor?: string;
 };
 
 export const PageLanding = styled.div`
@@ -33,9 +34,6 @@ export const LogoContainer = styled.div`
 export const LogoContainerImg = styled.img`
     height: 10rem;
 
-    ${media.greaterThan("large")`
-        height: 100%
-    `}
 `
 
 export const LogoContainerH2 = styled.h2`
@@ -67,7 +65,7 @@ export const ButtonsContainer = styled.div`
     justify-content: flex-start;
     `}
 `
-export const ButtonsContainerA = styled.a<PageProps>`
+export const ButtonsContainerA = styled(Link)<PageProps>`
     width: 30rem;
     height: 10.4rem;
     border-radius: 0.8rem;
@@ -81,7 +79,7 @@ export const ButtonsContainerA = styled.a<PageProps>`
     text-decoration: none;
     color: var(--color-button-text);
 
-    background: ${props => props.bgColor || "var(--color-secundary)"};
+    background: ${props => props.bgcolor || "var(--color-secundary)"};
 
     ${media.greaterThan("large")`
         font-size: 2.4rem;

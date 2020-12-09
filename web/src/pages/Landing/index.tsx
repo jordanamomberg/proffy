@@ -12,7 +12,7 @@ import * as S from "./styles";
 function Landing() {
   return (
     <S.PageLanding>
-      <S.Container id="page-landing-content" className="container">
+      <S.Container id="page-landing-content">
         <S.LogoContainer>
           <S.LogoContainerImg src={logoImg} alt="Proffy" />
           <S.LogoContainerH2>
@@ -27,12 +27,15 @@ function Landing() {
         />
 
         <S.ButtonsContainer>
-          <S.ButtonsContainerA bgColor="var(--color-primary-lighter)">
+          <S.ButtonsContainerA
+            to="/study"
+            bgcolor="var(--color-primary-lighter)"
+          >
             <S.ButtonsContainerImg src={studyIcon} alt="Estudar" />
             Estudar
           </S.ButtonsContainerA>
 
-          <S.ButtonsContainerA>
+          <S.ButtonsContainerA to="/give-classes">
             <S.ButtonsContainerImg src={giveClassesIcon} alt="Estudar" />
             Dar aulas
           </S.ButtonsContainerA>
