@@ -9,6 +9,7 @@ export const Container = styled.div`
         max-width: 100%;
     `}
 `
+
 export const SearchTeachers = styled.form`
     margin-top: 3.2rem;
     ${media.greaterThan("medium")`
@@ -18,13 +19,13 @@ export const SearchTeachers = styled.form`
         position: absolute;
         bottom: -28px;
     `}
-
-
 `
+
 export const Label = styled.label`
     color: var(--color-text-in-primary);
     font-size: 1.4rem;
 ` 
+
 export const InputBlock = styled.div`
   position: relative;
   margin-top: 1.4rem;
@@ -52,6 +53,34 @@ export const Input = styled.input`
     font: 1.6rem Archivo;
    
 ` 
+
+export const Main = styled.main`
+    margin: 3.2rem auto;
+    width: 90%;
+    ${media.greaterThan("medium")`
+        padding: 3.2rem 0;
+        max-width: 740px;
+        margin: 0 auto;
+    `}
+`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,5 +1,6 @@
 import React from "react";
 import PageHeader from "../../components/PageHeader";
+import TeacherItem from "../../components/TeacherItem";
 
 import * as S from "./styles";
 
@@ -22,6 +23,12 @@ const TeacherList: React.FC = () => {
           </S.InputBlock>
         </S.SearchTeachers>
       </PageHeader>
+
+      <S.Main>
+        <TeacherItem />
+        <TeacherItem />
+        <TeacherItem />
+      </S.Main>
     </S.Container>
   );
 };
