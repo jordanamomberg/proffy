@@ -12,7 +12,7 @@ export async function up(knex: Knex) {
             .onDelete('CASCADE');
 
         table.timestamp('created_at')
-            .defaultTo('now()')
+            .defaultTo(knex.raw('CURRENT_TIMESTAMP'))
             .notNullable();
     })
 }
@@ -21,7 +21,7 @@ export async function up(knex: Knex) {
 
 //CASCADE = Caso um professor seja deletado da plataforma todas as aulas deles sumirão tb.
 
-//defaultTO('now()')... quando o usuário clicar em entrar em contato vai pegar o horário atual
+//defaultTO('CURRENT_TIMESTAMP')... quando o usuário clicar em entrar em contato vai pegar o horário atual
 
 export async function down(knex: Knex) {
     return knex.schema.dropTable('connections');

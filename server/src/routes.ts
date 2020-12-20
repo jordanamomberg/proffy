@@ -1,64 +1,21 @@
 import express from "express";
-import db from "./database/connection";
-import convertHourToMinute from "./utils/convertHourToMinute";
+
+import ClassesController from "./controllers/ClassesController";
+import ConnectionController from "./controllers/ConnectionsController";
 
 const routes = express.Router();
 
-interface ScheduleItem {
-  week_day: number;
-  from: string;
-  to: string;
-}
+const classesControllers = new ClassesController();
+const connectionController = new ConnectionController();
 
-routes.post("/classes", async (request, response) => {
-  const { name, avatar, whatsapp, bio, subject, cost, schedule } = request.body;
+routes.get("/classes", classesControllers.index);
 
-  const trx = await db.transaction();
+routes.post("/classes", classesControllers.create);
 
-  //transaction => faz todas as operações do banco ao mesmo tempo, e se uma falhar desfaz as anteriores
-  try {
-    const insertedUsersIds = await trx("users").insert({
-      name,
-      avatar,
-      whatsapp,
-      bio,
-    });
+routes.get("/connections", connectionController.index);
 
-    //pegando o primeiro user_id e inserindo na table classes
-    const user_id = insertedUsersIds[0];
+routes.post("/connections", connectionController.create);
 
-    const insertedClassesIds = await trx("classes").insert({
-      subject,
-      cost,
-      user_id,
-    });
-
-    const class_id = insertedClassesIds[0];
-
-    const classSchedule = schedule.map((scheduleItem: ScheduleItem) => {
-      return {
-        class_id,
-        week_day: scheduleItem.week_day,
-        from: convertHourToMinute(scheduleItem.from),
-        to: convertHourToMinute(scheduleItem.to),
-      };
-    });
-
-    await trx("class_schedule").insert(classSchedule);
-
-    await trx.commit();
-
-    return response.status(201).send();
-
-  } catch (err) {
-      
-    await trx.rollback();
-
-    return response.status(400).json({
-      error: "Unexpected error while creating new class",
-    });
-  }
-});
 
 export default routes;
 
