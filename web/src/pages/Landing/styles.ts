@@ -79,7 +79,7 @@ export const ButtonsContainerA = styled(Link)<PageProps>`
     text-decoration: none;
     color: var(--color-button-text);
 
-    background: ${props => props.bgcolor || "var(--color-secundary)"};
+    background: ${props => props.bgcolor || "var(--color-secondary)"};
 
     ${media.greaterThan("large")`
         font-size: 2.4rem;

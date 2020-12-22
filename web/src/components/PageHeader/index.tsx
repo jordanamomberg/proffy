@@ -7,10 +7,11 @@ import * as S from "./styles";
 
 interface PageHeaderProps {
   title: string;
+  description?: string;
 }
 
 const PageHeader: React.FC<PageHeaderProps> = (props) => {
-  const { title } = props;
+  const { title, description } = props;
 
   return (
     <S.PageHeader>
@@ -23,6 +24,9 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
 
       <S.HeaderContent>
         <S.HeaderContentStrong>{title}</S.HeaderContentStrong>
+        {description && (
+          <S.HeaderDescription>{description}</S.HeaderDescription>
+        )}
         {props?.children}
       </S.HeaderContent>
     </S.PageHeader>
