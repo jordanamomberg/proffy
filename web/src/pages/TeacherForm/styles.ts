@@ -15,6 +15,8 @@ export const Main = styled.main`
   overflow: hidden;
 `;
 
+export const Form = styled.form``
+
 export const Fieldset = styled.fieldset`
   border: 0;
   padding: 0 2.4rem;
@@ -90,3 +92,21 @@ export const Button = styled.button`
        margin-top: 0;
     `};
 `;
+
+export const ButtonNewSchedule = styled.button`
+  background-color: none;
+  border: 0;
+  color: var(--color-primary);
+  font: 700 1.6rem Archivo;
+  cursor: pointer; 
+  transition: color 0.2s;
+  &:hover {
+    color: var(--color-primary-dark);
+  }
+`; 
+
+export const ScheduleItem = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  column-gap: 1.6rem;
+`; 
