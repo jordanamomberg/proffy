@@ -78,7 +78,7 @@ export const PriceValue = styled.strong`
     `}
 `;
 
-export const Button = styled.button`
+export const Button = styled.a`
   width: 20rem;
   height: 5.6rem;
   background-color: var(--color-secondary);
@@ -91,6 +91,7 @@ export const Button = styled.button`
   align-items: center;
   justify-content: space-evenly;
   transition: 0.2s;
+  text-decoration: none;
   &:hover {
     background-color: var(--color-secondary-dark);
   }

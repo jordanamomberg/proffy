@@ -1,4 +1,5 @@
 import React, { FormEvent, useState } from "react";
+import { useHistory } from "react-router-dom";
 import Input from "../../components/Inputs";
 import PageHeader from "../../components/PageHeader";
 import Textarea from "../../components/Textarea";
@@ -10,6 +11,8 @@ import Select from "../../components/Select";
 import api from "../../services/api";
 
 const TeacherList: React.FC = () => {
+  const history = useHistory();
+
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
@@ -22,11 +25,11 @@ const TeacherList: React.FC = () => {
     { week_day: 0, from: "", to: "" },
   ]);
 
-  function addNewScheduleItem() {
+  function addNewScheduleItem(): void {
     setScheduleItems([...scheduleItems, { week_day: 0, from: "", to: "" }]);
   }
 
-  function handleCreateClass(e: FormEvent) {
+  function handleCreateClass(e: FormEvent): void {
     e.preventDefault();
 
     api
@@ -41,6 +44,7 @@ const TeacherList: React.FC = () => {
       })
       .then(() => {
         alert("Cadastro efetuado com sucesso");
+        history.push("/");
       })
       .catch(() => {
         alert("Erro no cadastro");
