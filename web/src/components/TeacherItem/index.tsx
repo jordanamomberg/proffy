@@ -1,5 +1,4 @@
 import React from "react";
-import JordanaAvatar from "../../assets/images/jordana.jpg";
 import whatsappIcon from "../../assets/images/icons/whatsapp.svg";
 
 import * as S from "./styles";
