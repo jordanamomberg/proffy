@@ -1,4 +1,7 @@
 import React, { FormEvent, useState } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import InputMask from "react-input-mask";
 import { useHistory } from "react-router-dom";
 import Input from "../../components/Inputs";
 import PageHeader from "../../components/PageHeader";
@@ -9,9 +12,70 @@ import warningIcon from "../../assets/images/icons/warning.svg";
 import * as S from "./styles";
 import Select from "../../components/Select";
 import api from "../../services/api";
+import Errors from "../../components/Errors";
 
 const TeacherList: React.FC = () => {
   const history = useHistory();
+
+  const initialValues = {
+    name: "",
+    avatar: "",
+    whatsapp: "",
+    bio: "",
+    subject: "",
+    cost: "",
+    scheduleItems: [
+      {
+        week_day: 0,
+        from: "",
+        to: "",
+      },
+    ],
+  };
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .required("campo obrigatório")
+      .min(3, "Mínimo de 3 caracteres"),
+    avatar: Yup.string().required("campo obrigatório").url(),
+    whatsapp: Yup.string()
+      .required("campo obrigatório")
+      .test("teste", "Digite um número válido", (value) => {
+        if (value !== undefined && value !== null) {
+          const { length } = value.replace(/[^\d]+/g, "");
+          return !(length > 11 || length < 10);
+        }
+        return false;
+      }),
+    bio: Yup.string().max(600, "Limite excedido"),
+  });
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: (): void => {
+      const response = api
+        .post("classes", {
+          name,
+          avatar,
+          whatsapp,
+          bio,
+          subject,
+          cost: Number(cost),
+          schedule: scheduleItems,
+        })
+        .then(() => {
+          alert("Cadastro efetuado com sucesso");
+          history.push("/");
+        })
+        .catch(() => {
+          alert("Erro no cadastro");
+        });
+      console.log({
+        response,
+      });
+    },
+  });
 
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState("");
@@ -75,40 +139,48 @@ const TeacherList: React.FC = () => {
         description="O primeiro passo é preencher esse formulário de inscrição"
       >
         <S.Main>
-          <S.Form onSubmit={handleCreateClass}>
+          <S.Form onSubmit={formik.handleSubmit}>
             <S.Fieldset>
               <S.Legend>Seus dados</S.Legend>
               <Input
                 name="name"
                 label="Nome Completo"
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
+                value={formik.values.name}
+                onChange={formik.handleChange}
               />
+
+              {formik.errors.name && formik.touched.name && (
+                <Errors>{formik.errors.name}</Errors>
+              )}
+
               <Input
                 name="avatar"
                 label="Avatar"
-                value={avatar}
-                onChange={(e) => {
-                  setAvatar(e.target.value);
-                }}
+                value={formik.values.avatar}
+                onChange={formik.handleChange}
               />
-              <Input
-                name="whatsapp"
-                label="WhatsApp"
-                value={whatsapp}
-                onChange={(e) => {
-                  setWhatsapp(e.target.value);
-                }}
-              />
+
+              {formik.errors.avatar && formik.touched.avatar && (
+                <Errors>{formik.errors.avatar}</Errors>
+              )}
+
+              <InputMask
+                mask="(99) 9 9999-9999"
+                value={formik.values.whatsapp}
+                onChange={formik.handleChange}
+              >
+                {() => <Input name="whatsapp" label="WhatsApp" />}
+              </InputMask>
+
+              {formik.errors.whatsapp && formik.touched.whatsapp && (
+                <Errors>{formik.errors.whatsapp}</Errors>
+              )}
+
               <Textarea
                 name="bio"
                 label="Biografia"
-                value={bio}
-                onChange={(e) => {
-                  setBio(e.target.value);
-                }}
+                value={formik.values.bio}
+                onChange={formik.handleChange}
               />
             </S.Fieldset>
 
@@ -117,10 +189,8 @@ const TeacherList: React.FC = () => {
               <Select
                 name="subject"
                 label="Matéria"
-                value={subject}
-                onChange={(e) => {
-                  setSubject(e.target.value);
-                }}
+                value={formik.values.subject}
+                onChange={formik.handleChange}
                 options={[
                   { value: "Artes", label: "Artes" },
                   { value: "Biologia", label: "Biologia" },
@@ -135,14 +205,15 @@ const TeacherList: React.FC = () => {
                 ]}
               />
               <Input
-                name="cost "
+                name="cost"
                 label="Custo da sua hora por aula"
-                value={cost}
-                onChange={(e) => {
-                  setCost(e.target.value);
-                }}
+                value={formik.values.cost}
+                onChange={formik.handleChange}
               />
             </S.Fieldset>
+            {formik.errors.cost && formik.touched.cost && (
+              <Errors>{formik.errors.cost}</Errors>
+            )}
 
             <S.Fieldset>
               <S.Legend>
@@ -156,12 +227,10 @@ const TeacherList: React.FC = () => {
                 return (
                   <S.ScheduleItem key={scheduleItem.week_day}>
                     <Select
-                      name="wee-day"
+                      name="week-day"
                       label="Dia da semana"
-                      value={scheduleItem.week_day}
-                      onChange={(e) =>
-                        setScheduleItemValue(index, "week_day", e.target.value)
-                      }
+                      value={formik.values.scheduleItems[0].week_day}
+                      onChange={formik.handleChange}
                       options={[
                         { value: "0", label: "Domingo" },
                         { value: "1", label: "Segunda-feria" },

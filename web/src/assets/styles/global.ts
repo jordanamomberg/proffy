@@ -20,6 +20,7 @@ export const GlobalStyle = createGlobalStyle`
     --color-button-text: #ffffff;
     --color-box-base: #ffffff;
     --color-box-footer: #fafafc;
+    --color-error: #B22222;
   
     font-size: 60%;
   }

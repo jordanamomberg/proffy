@@ -1,8 +1,14 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+interface InputProps {
+  error?: boolean;
+}
 
-export const InputBlock = styled.div`
+export const InputBlock = styled.div<InputProps>`
   position: relative;
   margin-top: 1.4rem;
+  /* ${({error}) => error && css`
+    border-color: var(--color-error);
+  `} */
   &:focus-within::after {
     width: calc(100% - 3.2rem);
     height: 2px;
@@ -29,4 +35,11 @@ export const Input = styled.input`
   outline: 0;
   padding: 0 1.6rem;
   font: 1.6rem Archivo;
+ 
 `;
+
+
+
+
+
+

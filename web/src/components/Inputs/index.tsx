@@ -1,4 +1,5 @@
 import React, { InputHTMLAttributes } from "react";
+import { useField } from "formik";
 
 import * as S from "./styles";
 
@@ -7,11 +8,12 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
 }
 
-const Input: React.FC<InputProps> = ({ label, name, ...rest }) => {
+const Input: React.FC<InputProps> = (props) => {
+  // const [field, meta] = useField(props);
   return (
     <S.InputBlock>
-      <S.Label htmlFor={name}>{label}</S.Label>
-      <S.Input type="text" id={name} {...rest} />
+      <S.Label htmlFor={props.name}>{props.label}</S.Label>
+      <S.Input type="text" id={props.name} {...props} />
     </S.InputBlock>
   );
 };
